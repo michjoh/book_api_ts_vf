@@ -1,9 +1,13 @@
 import {RequestHandler, ErrorRequestHandler} from "express";
 
+export class StatusError extends Error {
+  constructor(readonly error: string | object, readonly status: number) {
+    super();
+  }
+}
+
 export const notFound: RequestHandler = (req, res, next) => {
-  const err = new Error("Not Found");
-  // @ts-ignore
-  err.status = 404;
+  const err = new StatusError("Not Found", 404);
   next(err);
 };
 
