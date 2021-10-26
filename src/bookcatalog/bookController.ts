@@ -1,7 +1,7 @@
 // class BookController {
-//     BookController() {
-//         this.bookRepository = new BookRepository();
-//         this.bookService = new BookService();
+//     BookController({bookRepository, bookService}) {
+//         this.bookRepository = bookRepository;
+//         this.bookService = bookService;
 //     }
 // }
 import mapValues from "lodash.mapvalues";
@@ -10,13 +10,18 @@ import {BookService} from "./bookService";
 import {BookRepository} from "./book";
 import {Request, Response, NextFunction} from "express";
 
-// const mapValues = (api, f) => Object.fromEntries(Object.entries(api).map(([key, value]) => [key, f(value)]));
 
-function withErrorHandling(api) {
+function withErrorHandling<T>(api: Record<keyof T, AsyncHandler>) {
   return mapValues(api, wrapWithTryCatch);
 }
 
-function wrapWithTryCatch(fn) {
+type AsyncHandler = (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => Promise<void>;
+
+function wrapWithTryCatch(fn: AsyncHandler): AsyncHandler {
   return async function (req, res, next) {
     try {
       await fn(req, res, next);
