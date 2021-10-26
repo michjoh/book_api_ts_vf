@@ -3,12 +3,14 @@ import { validateBook } from "./validateBook";
 import {StatusError} from "../error";
 
 export const validate: RequestHandler = (req, res, next) => {
-  const validateErrors = validateBook(req.body);
+  const result = validateBook(req.body);
 
-  if (validateErrors) {
-    const error = new StatusError(validateErrors, 400);
+  if (!result.success) {
+    const error = new StatusError(result.error, 400);
     next(error);
   } else {
+    const x = result.data;
+    x.a
     next();
   }
 };
