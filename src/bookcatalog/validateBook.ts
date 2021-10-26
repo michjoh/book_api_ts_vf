@@ -27,3 +27,7 @@ export function validateBook(book: unknown) {
   // return result.error ? result.error.details : null;
   // return result.error ? Maybe.Just(result.error.details) : Maybe.None();
 }
+
+
+// io-ts
+// runtypes

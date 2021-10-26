@@ -19,6 +19,13 @@ class C implements ISth {}
 // bounded polymorphism
 type RequestStatus = {state: 'loading'} | {state: 'loaded', data: string} | {state: 'error', error: Error};
 
+enum Test {
+    ok = 0,
+    error = 1
+}
+type BackendCode = 0 | 1
+// toUIRepresentation(code: BackendCode): MyType
+
 const processData = (status: RequestStatus) => {
     if(status.state === 'loaded') {
         console.log(status.data);
@@ -38,4 +45,4 @@ const someFn = (): Result<string, Error> => {
     return {status: 'success', data: 'asdfdsaf'}
 }
 
-sameFn().map().flatMap()
+// sameFn().map().flatMap()
