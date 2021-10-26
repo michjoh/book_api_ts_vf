@@ -1,6 +1,7 @@
+import {RequestHandler} from "express";
 import { validateBook } from "./validateBook";
 
-export function validate(req, res, next) {
+export const validate: RequestHandler = (req, res, next) => {
   const validateErrors = validateBook(req.body);
 
   if (validateErrors) {
@@ -13,4 +14,4 @@ export function validate(req, res, next) {
   } else {
     next();
   }
-}
+};

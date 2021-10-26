@@ -9,7 +9,7 @@ const schema = Joi.object({
   isbn: Joi.string().required().uppercase().length(10),
 });
 
-export function validateBook(book) {
+export function validateBook(book: unknown) {
   const result = schema.validate(book, {
     allowUnknown: false,
     convert: true,
