@@ -1,8 +1,12 @@
 import { makeSlug } from "./makeSlug";
 import {BookDTO, BookRepository} from "./book";
 
-export const bookServiceFactory = (bookRepository: BookRepository) => ({
-  async createOrUpdate(book: BookDTO) {
+export interface BookService {
+  createOrUpdate(book: BookDTO): Promise<void>;
+}
+
+export const bookServiceFactory = (bookRepository: BookRepository): BookService => ({
+  async createOrUpdate(book) {
     const slug = makeSlug(book.title);
     await bookRepository.createOrUpdate({ ...book, slug });
   },
